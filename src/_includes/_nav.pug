@@ -1,0 +1,37 @@
+- 
+  var navs = [
+    {
+      "id": "home",
+      "title": "ホーム"
+    },
+    {
+      "id": "news",
+      "title": "おしらせ"
+    },
+    {
+      "id": "about",
+      "title": "お店の紹介"
+    },
+    {
+      "id": "cats",
+      "title": "猫ちゃんたち"
+    },
+    {
+      "id": "price",
+      "title": "利用料金"
+    },
+    {
+      "id": "food",
+      "title": "カフェメニュー"
+    },
+    {
+      "id": "contact",
+      "title": "お問い合わせ"
+    }
+  ]
+
+nav
+  ul
+    each nav in navs
+      li
+        a(href=`${nav.id != 'home' ? '/' + nav.id + '/' : '/'}`)= nav.title

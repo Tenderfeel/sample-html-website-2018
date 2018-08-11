@@ -6,6 +6,9 @@ import webpack from 'webpack';
 import sass from 'gulp-sass';
 import pug from 'gulp-pug';
 import imagemin from 'gulp-imagemin';
+import _browserSync from 'browser-sync';
+
+const browserSync = _browserSync.create();
 
 const paths = {
   scripts: {
@@ -63,15 +66,21 @@ export function images() {
 
 //Watch
 export function watch() {
+  browserSync.init({
+    server: {
+      baseDir: 'dist/'
+    }
+  });
   gulp.watch(paths.scripts.src, scripts);
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.htmls.watch,  htmls);
   gulp.watch(paths.images.src, images);
+  gulp.watch([paths.htmls.dest, paths.scripts.dest, paths.styles.dest, paths.images.dest]).on('change', browserSync.reload);
 }
 
 
 const build = gulp.series(clean, gulp.parallel(htmls, images, scripts, styles));
-const _default = gulp.series(clean, gulp.parallel(htmls, images, scripts, styles, watch));
+const _default = gulp.series(build, watch);
 
 gulp.task('build', build);
 
